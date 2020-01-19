@@ -15,7 +15,7 @@ namespace Normal.Realtime {
         // TODO: Rather than getting getting the client ID from realtime to compare, I'd rather the model be able to tell us whether it's owned locally or not. The model should have a reference to the room/datastore it belongs to.
         //       Once IModel becomes a class instead of an interface, we'll be able to do this.
         public int  ownerID        { get { return _model.ownerID; } }
-        public bool isOwnedLocally { get { return _model.ownerID == realtime.clientID; } }
+        public bool isOwnedLocally { get { if (_model == null) Debug.LogWarning(gameObject); return _model.ownerID == realtime.clientID; } }
         public bool isOwnedByWorld { get { return _model.ownerID == -1; } }
     
         private bool   _wrotePoseChangesLastNetworkFrame = false;

@@ -5,7 +5,6 @@ using UnityEngine.XR;
 
 using VRKeys;
 using TMPro;
-
 using Normal.Realtime;
 
 public class UIParent : MonoBehaviour
@@ -189,8 +188,7 @@ public class UIParent : MonoBehaviour
     void StartIdeaCreation()
     {
         //TODO replace this line
-        newHeadset = Realtime.Instantiate("HeadsetNew");//(GameObject)Resources.Load("HeadsetNew"));
-        newHeadset.GetComponent<RealtimeTransform>().RequestOwnership();
+        newHeadset = Instantiate((GameObject)Resources.Load("HeadsetNew"));
         //newHeadset.GetComponent<Renderer>().material = (Material)Resources.Load("NewHeadset");
         //newHeadset.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         mode = Mode.ideaCreation;

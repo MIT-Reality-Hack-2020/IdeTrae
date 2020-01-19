@@ -31,7 +31,10 @@ public class SceneLoader : MonoBehaviour
         if (confetti == null)
         {
             confetti = GameObject.Find("Confetti");
-            confetti.SetActive(false);
+            if (confetti != null)
+            {
+                confetti.SetActive(false);
+            }
         }
     }
 
