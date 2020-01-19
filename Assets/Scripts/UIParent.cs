@@ -126,7 +126,7 @@ public class UIParent : MonoBehaviour
                 k = vrk.GetComponent<Keyboard>();
                 k.leftHandAnchor = GameObject.Find("LeftHandAnchor");
                 k.rightHandAnchor = GameObject.Find("RightHandAnchor");
-                k.player = GameObject.Find("OVRPlayerController");
+                k.player = GameObject.Find("CenterEyeAnchor");
                 k.Enable();
                 k.SetPlaceholderMessage("Enter a snappy title!");
                 k.OnUpdate.AddListener(HandleUpdate);

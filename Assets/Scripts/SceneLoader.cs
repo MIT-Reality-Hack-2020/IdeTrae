@@ -27,7 +27,7 @@ public class SceneLoader : MonoBehaviour
         grabSound = grabSoundObj.GetComponent<AudioSource>();
         orig_pos = GetComponent<Collider>().gameObject.transform.position;
         confettiSound = confettiSoundObj.GetComponent<AudioSource>();
-
+        
         if (confetti == null)
         {
             confetti = GameObject.Find("Confetti");

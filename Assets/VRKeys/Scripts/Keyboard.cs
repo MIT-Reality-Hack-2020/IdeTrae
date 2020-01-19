@@ -167,7 +167,9 @@ namespace VRKeys {
 
             //Debug.Log("lefthandanch " + leftHandAnchor);
             //Debug.Log("lefthand " + leftHand);
-            transform.position = player.transform.position + new Vector3(0.0f, 0.5f, 1.2f);
+            transform.position = player.transform.position + Vector3.Scale(player.transform.forward, new Vector3(1.2f, 1.2f, 1.3f)) + new Vector3(0.0f, 0.05f, 0.0f);
+            //transform.localPosition += Vector3.Scale(player.transform.forward, new Vector3(0.0f, 0.0f, -1.0f));
+            transform.rotation = player.transform.rotation;
 
             leftHand.transform.position = leftHandAnchor.transform.position;
             
