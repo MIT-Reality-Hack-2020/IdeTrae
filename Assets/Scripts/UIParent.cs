@@ -16,6 +16,10 @@ public class UIParent : MonoBehaviour
         ideaDone
     };
 
+    public GameObject leftHandAnchor;
+    public GameObject rightHandAnchor;
+    public GameObject player;
+
     public string title;
 
     public Mode mode = Mode.neutral;
@@ -29,9 +33,9 @@ public class UIParent : MonoBehaviour
     float timer;
 
     //for idea scaling
-    static float interval = 0.003f;
+    static float interval = 0.005f;
     Vector3 intervalVector = new Vector3(interval, interval, interval);
-    float headsetSize = 60;
+    float headsetSize = 5;
     //for particles
     Vector3 offset = new Vector3(0.0f, 0.0f, 0.0f);
 
@@ -46,15 +50,9 @@ public class UIParent : MonoBehaviour
         timer = 0;
         title = "NEW IDEA!";
 
-        GameObject camera = new GameObject("Main Camera");
-        Camera cam = camera.AddComponent<Camera>();
+        leftHandAnchor = GameObject.Find("LeftHandAnchor");
+        rightHandAnchor = GameObject.Find("RightHandAnchor");
 
-        cam.nearClipPlane = 0.1f;
-        //camera.AddComponent<AudioListener> ();
-
-        // Improves event system performance
-        Canvas canvas = k.canvas.GetComponent<Canvas>();
-        canvas.worldCamera = cam;
     }
 
     // Update is called once per frame
@@ -74,15 +72,17 @@ public class UIParent : MonoBehaviour
         {
             if (BumperPressed())
             {
+                //Debug.Log("updated");
                 if (timer < headsetSize)
                 {
                     newHeadset.transform.localScale += intervalVector;
-                    newHeadset.transform.localPosition = InputTracking.GetLocalPosition(XRNode.LeftHand);
+                    newHeadset.transform.position = rightHandAnchor.transform.position + new Vector3(0.0f, 0.3f, 0.0f);
+                    //newHeadset.transform.rotation = //Quaternion.Euler(rightHandAnchor.transform.rotation.eulerAngles + new Vector3(0.0f, 180f, 0.0f));
                     timer++;
                 }
                 else
                 {
-                    Particles("CFX4 Sparks Explosion B", 0.5f, InputTracking.GetLocalPosition(XRNode.LeftHand));
+                    Particles("CFX4 Sparks Explosion B", 0.5f, rightHandAnchor.transform.position + new Vector3(0.0f, 0.3f, 0.0f));
                     Debug.Log("done scaling headset");
                     //copy headset and save to list
                     //GameObject headset = Instantiate(newHeadset);
@@ -122,6 +122,9 @@ public class UIParent : MonoBehaviour
             if (k == null || k.disabled)
             {
                 k = vrk.GetComponent<Keyboard>();
+                k.leftHandAnchor = GameObject.Find("LeftHandAnchor");
+                k.rightHandAnchor = GameObject.Find("RightHandAnchor");
+                k.player = GameObject.Find("OVRPlayerController");
                 k.Enable();
                 k.SetPlaceholderMessage("Enter a snappy title!");
                 k.OnUpdate.AddListener(HandleUpdate);
@@ -132,11 +135,14 @@ public class UIParent : MonoBehaviour
         }
         else if (mode == Mode.ideaDone)
         {
+            Debug.Log("idea done");
             DisableKeyboard();
             keyboard.SetActive(false);
-            //MICHAEL - edit transform here!
-            newHeadset.GetComponent<Renderer>().material = (Material)Resources.Load("HeadsetDone");
             newHeadset.SetActive(true);
+            newHeadset.transform.position = new Vector3(1.019f, 1.507f, 2.262f);
+            newHeadset.transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+            //newHeadset.GetComponent<Renderer>().material = (Material)Resources.Load("HeadsetDone");
+            mode = Mode.neutral;
         }
     }
 
@@ -181,9 +187,9 @@ public class UIParent : MonoBehaviour
     void StartIdeaCreation()
     {
         //TODO replace this line
-        newHeadset = Instantiate((GameObject)Resources.Load("HeadsetPlaceholder"));
-        newHeadset.GetComponent<Renderer>().material = (Material)Resources.Load("NewHeadset");
-        newHeadset.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        newHeadset = Instantiate((GameObject)Resources.Load("HeadsetNew"));
+        //newHeadset.GetComponent<Renderer>().material = (Material)Resources.Load("NewHeadset");
+        //newHeadset.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         mode = Mode.ideaCreation;
         //Particles("CFX4 Aura Bubble C", 0.5f, newHeadset.transform);
         timer = 0;

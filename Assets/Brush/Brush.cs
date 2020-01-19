@@ -25,13 +25,14 @@ public class Brush : MonoBehaviour {
             
         // Start by figuring out which hand we're tracking
         XRNode node    = _hand == Hand.LeftHand ? XRNode.LeftHand : XRNode.RightHand;
-        string trigger = _hand == Hand.LeftHand ? "Oculus_CrossPlatform_PrimaryIndexTrigger" : "Oculus_CrossPlatform_SecondaryIndexTrigger";
+        string leftTrigger = "Oculus_CrossPlatform_PrimaryIndexTrigger";
+        string rightTrigger = "Oculus_CrossPlatform_SecondaryIndexTrigger";
 
         // Get the position & rotation of the hand
         bool handIsTracking = UpdatePose(node, ref _handPosition, ref _handRotation);
 
         // Figure out if the trigger is pressed or not
-        bool triggerPressed = Input.GetAxisRaw(trigger) > 0.1f;
+        bool triggerPressed = Input.GetAxisRaw(leftTrigger) > 0.1f || Input.GetAxisRaw(rightTrigger) > 0.1f;
 
         // If we lose tracking, stop drawing
         if (!handIsTracking)

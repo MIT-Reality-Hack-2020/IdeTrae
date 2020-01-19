@@ -116,7 +116,6 @@ namespace VRKeys {
 		private GameObject playerSpace;
 
 		private GameObject leftHand;
-
 		private GameObject rightHand;
 
 		private LetterKey[] keys;
@@ -124,6 +123,10 @@ namespace VRKeys {
 		private bool shifted = false;
 
 		private Layout layout;
+
+        public GameObject leftHandAnchor;
+        public GameObject rightHandAnchor;
+        public GameObject player;
 
 		/// <summary>
 		/// Initialization.
@@ -148,21 +151,34 @@ namespace VRKeys {
 			PlaceholderVisibility ();
 
 			initialized = true;
+
+            
 		}
 
 		private void Update () {
-			//playerSpace.transform.localPosition = InputTracking.GetLocalPosition (XRNode.TrackingReference);
-			//playerSpace.transform.localRotation = InputTracking.GetLocalRotation (XRNode.TrackingReference);
+            //playerSpace.transform.localPosition = InputTracking.GetLocalPosition (XRNode.TrackingReference);
+            //playerSpace.transform.localRotation = InputTracking.GetLocalRotation (XRNode.TrackingReference);
 
-			leftHand.transform.localPosition = InputTracking.GetLocalPosition (XRNode.LeftHand);
-			leftHand.transform.localRotation = InputTracking.GetLocalRotation (XRNode.LeftHand);
+            //leftHand.transform.localPosition = InputTracking.GetLocalPosition (XRNode.LeftHand);
+            //leftHand.transform.localRotation = InputTracking.GetLocalRotation (XRNode.LeftHand);
 
-			rightHand.transform.localPosition = InputTracking.GetLocalPosition (XRNode.RightHand);
-			rightHand.transform.localRotation = InputTracking.GetLocalRotation (XRNode.RightHand);
-		}
+            //rightHand.transform.localPosition = InputTracking.GetLocalPosition (XRNode.RightHand);
+            //rightHand.transform.localRotation = InputTracking.GetLocalRotation (XRNode.RightHand);
 
-		private void PositionAndAttachMallets () {
-			//transform.SetParent (playerSpace.transform, false);
+            //Debug.Log("lefthandanch " + leftHandAnchor);
+            //Debug.Log("lefthand " + leftHand);
+            transform.position = player.transform.position + new Vector3(0.0f, 0.5f, 1.2f);
+
+            leftHand.transform.position = leftHandAnchor.transform.position;
+            
+            leftHand.transform.rotation = leftHandAnchor.transform.rotation;
+
+            rightHand.transform.position = rightHandAnchor.transform.position;
+            rightHand.transform.rotation = rightHandAnchor.transform.rotation;
+        }
+
+        private void PositionAndAttachMallets () {
+            
 			//transform.localPosition = positionRelativeToUser;
             //if (leftMallet == null) leftMallet = GameObject.Find("Left Mallet");
             //if (rightMallet == null) rightMallet = GameObject.Find("Right Mallet");
